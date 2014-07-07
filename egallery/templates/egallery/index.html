@@ -1,0 +1,52 @@
+{% load thumbnail %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html  class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       
+        
+        
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+        <script type="text/javascript" src="{% static 'js/egallery/jquery.row-grid.min.js' %}" > </script>
+        <script type="text/javascript" src="{% static 'js/egallery/jquery.fancybox-2.1.5.pack.js' %}"></script>
+
+        <link rel="stylesheet" href="{% static 'css/egallery/jquery.fancybox-2.1.5.css' %}" type="text/css" media="screen" />
+        <link rel="stylesheet" href="{% static 'css/egallery/rowgrid.css' %}" type="text/css" media="screen" />
+
+        <script>
+            $(document).ready(function() {
+                $(".fancybox").fancybox({
+                    openEffect  : 'none',
+                    closeEffect : 'none',
+                    fitToView: true,
+                });
+
+                var options = {minMargin: 10, maxMargin: 35, itemSelector: ".item"};
+                $(".container").rowGrid(options);
+            });
+
+        </script>
+    </head>
+    <body  body_attr|safe }}>
+    <a href="{% url 'gallery-all' %}"> All </a>
+{% for i in categories %}
+    <a href="{% url 'gallery-cat' i %}"> {{i}} </a>
+{% endfor %}
+
+<H1>{{gallery.title}}</H1>
+<div class="container">
+{% for picture in object_list %}
+<div class="item">
+    <a href="/{{picture.picture.large.url}}" class="fancybox" rel="gallery" title="{{picture.title}}"><img src="/{{picture.picture.index.url}}" /></a>
+</div>
+{% endfor %}
+</div>
+

@@ -1,0 +1,4 @@
+include LICENSE
+include README.rst
+recursive-include egallery/templates *
+recursive-include egallery/static *
