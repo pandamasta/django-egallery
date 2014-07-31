@@ -2,25 +2,39 @@
 django-egallery
 =====
 
-django-egallery is a simple Django app to conduct Web-based Gallery. 
+        [ !! APP NOT FINISH TO BE USED AS EXPECTED !! ]
+     [ !! README WILL BE UPDATED WHEN ALL WILL BE READY !! ]
 
-Detailed documentation is in the "docs" directory.
+
+django-egallery is a simple Django app to conduct Web-based pictures Gallery. 
+
+The app use 3rd app:
+    - django easy-thumbnails (powerfull thumbnails system) https://github.com/SmileyChris/easy-thumbnails
+    - fancybox (zooming functionality for image)  https://github.com/fancyapps/fancyBox
+    - rowGrid.js (lightweight jQuery plugin) https://github.com/brunjo/rowGrid.js
+
 
 Quick start
 -----------
 
-1. Add "egallery" to your INSTALLED_APPS setting like this::
+1. Install required apps throught pip
+
+   pip install easy-thumbnails
+   pip install egallery (will be upload to pip)
+
+2. Add "egallery" + easy_thumbnails to your INSTALLED_APPS setting like this::
 
       INSTALLED_APPS = (
           ...
           'egallery',
+          'easy_thumbnails', 
       )
 
-2. Include the polls URLconf in your project urls.py like this::
+3. Include the polls URLconf in your project urls.py like this::
 
       url(r'^gallery/', include('gallery.urls')),
 
-3. Add profiles thumbnails in settings.py
+4. Add profiles thumbnails in settings.py
 
     THUMBNAIL_ALIASES = {
         '': {
@@ -30,10 +44,16 @@ Quick start
         },
     }
 
+5. Don't forget to declare STATIC_URL and STATICFILES_DIRS in your settings.py
 
-4. Run `python manage.py syncdb` to create the gallery models.
+    eg:
+        STATIC_URL = '/static/'
+        STATICFILES_DIRS = [(os.path.join(BASE_DIR, "static"))]
 
-5. Start the development server and visit http://127.0.0.1:8000/admin/
-   to create and add Picture. You'll need the Admin app enabled.
 
-6. Visit http://127.0.0.1:8000/gallery/ to see the gallery.
+6. Run `python manage.py syncdb` to create the gallery models.
+
+7. Start the development server and visit http://127.0.0.1:8000/admin/
+   to add categories and pictures.
+
+8. Visit http://127.0.0.1:8000/gallery/ to see the gallery.
