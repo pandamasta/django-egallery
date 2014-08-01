@@ -12,7 +12,7 @@ class Category(models.Model):
     is_public = models.BooleanField(_('is public'), default=True, help_text=_('Public galleries will be displayed in the default views.'))
     created = models.DateTimeField(_('Created'), auto_now_add=True)
     updated = models.DateTimeField(_('Updated'), auto_now=True)
-    
+
 
     class Meta:
         ordering = ['created']
@@ -22,13 +22,13 @@ class Category(models.Model):
 
     def __str__(self):              # __unicode__ on Python 2
                     return self.title
-    
+
     #tags = TagField(help_text='Tag of the gallery', verbose_name=_('tags'), blank=True, null=True)
 
 class Picture(models.Model):
     title = models.CharField(_('title'),max_length=50,unique=True)
     slug = models.SlugField(_('title slug'),unique=True,help_text=_('A "slug" is a unique URL-friendly title for an object.'))
-    picture = ThumbnailerImageField(upload_to='static/gallery', blank=True) 
+    picture = ThumbnailerImageField(upload_to='static/gallery', blank=True)
     description = models.TextField(_('description'),blank=True)
     price = models.IntegerField (_('price'),null=True,blank=True)
 
@@ -50,7 +50,30 @@ class Picture(models.Model):
 
     image_img.allow_tags = True
 
-   
+    #Seems to be a good way, but it doesn't work
+    #
+    #Receive the pre_delete signal and delete the file associated with the model instance.
+    #from django.db.models.signals import post_delete
+    #from django.dispatch.dispatcher import receiver
+
+    #@receiver(post_delete, sender=Picture)
+    #def photo_post_delete_handler(sender, **kwargs):
+    #    pic = kwargs['instance']
+    #    storage, path = pic.picture.storage, pic.path
+    #    storage.delete(path)
+
+    #Overriding the delete method
+    def delete(self, *args, **kwargs):
+        # You have to prepare what you need before delete the model
+        storage, path = self.picture.storage, self.picture.path
+
+        # Delete the model before the file
+        super(Picture, self).delete(*args, **kwargs)
+
+        # Delete pictures after the model
+        self.picture.delete_thumbnails()
+        storage.delete(path) #delete original picture
+
     def __str__(self):              # __unicode__ on Python 2
                 return self.title
 
