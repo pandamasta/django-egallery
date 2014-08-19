@@ -57,3 +57,35 @@ Quick start
    to add categories and pictures.
 
 8. Visit http://127.0.0.1:8000/gallery/ to see the gallery.
+
+Errors:
+-------
+
+InvalidImageFormatError at /admin/egallery/picture/
+The source file does not appear to be an image
+
+If you get InvalidImageFormatError after you trying to upload an image, it means that
+pillow (installed with easy_thumbnails) doesn't have the jpeg support 
+
+1) Uninstall Pillow
+    pip uninstall Pillow    
+2)
+Install these following packages
+
+    eg: Debian
+    sudo apt-get install python-dev build-essential 
+    sudo apt-get install libjpeg-dev libfreetype6 libfreetype6-dev zlib1g-dev
+
+3) Reinstall Pillow
+
+    pip install Pillow
+
+4) Check that you get JPEG support a the end of the compilation of Pillow
+
+    PIL SETUP SUMMARY
+    ----------------------
+    .. 
+    --- JPEG support available
+    ..
+
+
