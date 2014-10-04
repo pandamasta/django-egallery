@@ -45,7 +45,7 @@
 <div class="container">
 {% for picture in object_list %}
 <div class="item">
-    <a href="/{{picture.picture.large.url}}" class="fancybox" rel="gallery" title="{{picture.title}}"><img src="/{{picture.picture.index.url}}" /></a>
+    <a href="{{picture.picture.large.url}}" class="fancybox" rel="gallery" title="{{picture.title}}"><img src="{{picture.picture.index.url}}" /></a>
 </div>
 {% endfor %}
 </div>

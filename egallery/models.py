@@ -28,13 +28,8 @@ class Category(models.Model):
 class Picture(models.Model):
     title = models.CharField(_('title'),max_length=50,unique=True)
     slug = models.SlugField(_('title slug'),unique=True,help_text=_('A "slug" is a unique URL-friendly title for an object.'))
-    picture = ThumbnailerImageField(upload_to='static/gallery', blank=True)
+    picture = ThumbnailerImageField(upload_to='egallery', blank=True)
     description = models.TextField(_('description'),blank=True)
-    price = models.IntegerField (_('price'),null=True,blank=True)
-
-    original_size_h = models.IntegerField (_('height'),null=True,blank=True)
-    original_size_w = models.IntegerField (_('width'),null=True,blank=True)
-    original_size_p = models.IntegerField (_('depth'),null=True,blank=True)
 
     created = models.DateTimeField(_('Created'), auto_now_add=True, null=True)
     updated = models.DateTimeField(_('Updated'), auto_now=True, null=True)
@@ -44,7 +39,7 @@ class Picture(models.Model):
 
     def image_img(self):
         if self.picture:
-            return u'<img src="/%s" />' % self.picture['avatar'].url
+            return u'<img src="%s" />' % self.picture['avatar'].url
         else:
             return '(No pic)'
 
