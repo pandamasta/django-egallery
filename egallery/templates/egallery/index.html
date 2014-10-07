@@ -40,8 +40,8 @@
 {% for i in categories %}
     <a href="{% url 'gallery-cat' i %}"> {{i}} </a>
 {% endfor %}
-
-<H1>{{gallery.title}}</H1>
+<H1>{{currentcategorie.title}}</H1>
+<H2>{{currentcategorie.description}}</H2>
 <div class="container">
 {% for picture in object_list %}
 <div class="item">

@@ -36,4 +36,5 @@ class GalleryDetailedList(ListView):
         all_active_rubrique = Category.objects.filter(is_public=True)
         context = super(GalleryDetailedList, self).get_context_data(**kwargs)
         context['categories'] = all_active_rubrique
+        context['currentcategorie'] = Category.objects.get(title=self.kwargs['cat'])
         return context
