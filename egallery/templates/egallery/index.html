@@ -1,7 +1,5 @@
 {% load thumbnail %}
-
 {% load static %}
-
 <!DOCTYPE html>
 <html  class="no-js">
     <head>
@@ -9,17 +7,28 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-       
-        
-        
 
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <!-- Add jQuery library -->
+        <script type="text/javascript" src="/static/fancybox/lib/jquery-1.10.2.min.js"></script>
 
+        <!-- Rowgrid stuff -->
         <script type="text/javascript" src="{% static 'js/egallery/jquery.row-grid.min.js' %}" > </script>
-        <script type="text/javascript" src="{% static 'js/egallery/jquery.fancybox-2.1.5.pack.js' %}"></script>
-
-        <link rel="stylesheet" href="{% static 'css/egallery/jquery.fancybox-2.1.5.css' %}" type="text/css" media="screen" />
         <link rel="stylesheet" href="{% static 'css/egallery/rowgrid.css' %}" type="text/css" media="screen" />
+
+        <!-- Add mousewheel plugin (this is optional) -->
+        <script type="text/javascript" src="/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+
+        <!-- Add fancyBox -->
+        <link rel="stylesheet" href="{% static 'fancybox/source/jquery.fancybox.css' %}" type="text/css" media="screen" />
+        <script type="text/javascript" src="{% static 'fancybox/source/jquery.fancybox.pack.js' %}"></script>
+
+        <!-- Optionally add helpers - button, thumbnail and/or media -->
+        <link rel="stylesheet" href="{% static 'fancybox/source/helpers/jquery.fancybox-buttons.css' %}" type="text/css" media="screen" />
+        <script type="text/javascript" src="{% static 'fancybox/source/helpers/jquery.fancybox-buttons.js' %}"></script>
+        <script type="text/javascript" src="{% static 'fancybox/source/helpers/jquery.fancybox-media.js' %}"></script>
+
+        <link rel="stylesheet" href="{% static 'fancybox/source/helpers/jquery.fancybox-thumbs.css' %}" type="text/css" media="screen" />
+        <script type="text/javascript" src="{% static 'fancybox/source/helpers/jquery.fancybox-thumbs.js' %}"></script>
 
         <script>
             $(document).ready(function() {
@@ -27,24 +36,30 @@
                     openEffect  : 'none',
                     closeEffect : 'none',
                     fitToView: true,
+                    helpers : {
+                        overlay : {
+                            css : {
+                                'background' : 'rgba(58, 42, 45, 0.95)'
+                            }
+                        }
+                    }
                 });
 
                 var options = {minMargin: 10, maxMargin: 35, itemSelector: ".item"};
                 $(".container").rowGrid(options);
             });
-
         </script>
+
     </head>
     <body  body_attr|safe }}>
     <a href="{% url 'gallery-all' %}"> All </a>
-{% for i in categories %}
+    {% for i in categories %}
     <a href="{% url 'gallery-cat' i %}"> {{i}} </a>
-{% endfor %}
+    {% endfor %}
 <H1>{{currentcategorie.title}}</H1>
 <H2>{{currentcategorie.description}}</H2>
 <div class="container">
-{% for picture in object_list %}
-<div class="item">
+{% for picture in object_list %}<div class="item">
     <a href="{{picture.picture.large.url}}" class="fancybox" rel="gallery" title="{{picture.title}}"><img src="{{picture.picture.index.url}}" /></a>
 </div>
 {% endfor %}
